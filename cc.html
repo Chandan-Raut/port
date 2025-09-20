@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #1f242d;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* ===== Bars Animation (Opening Effect) ===== */
+    .bars-animation {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      animation: hide-bars 2s forwards;
+      animation-delay: 1s; /* disappear after animation */
+    }
+
+    .bars-animation .bar {
+      width: 100%;
+      height: 100%;
+      background: #1f242d;
+      transform: translateY(-100%);
+      animation: show-bars .5s ease-in-out forwards;
+      animation-delay: calc(.1s * var(--i));
+    }
+
+    @keyframes show-bars {
+      100% {
+        transform: translate(0%);
+      }
+    }
+
+    @keyframes hide-bars {
+      100% {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    /* ===== Navbar ===== */
+    .navbar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      padding: 20px 9%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(31, 36, 45, 0.95);
+      visibility: hidden;
+      opacity: 0;
+      animation: show-content 1.5s linear forwards;
+      animation-delay: 1.2s;
+    }
+
+    .navbar .logo {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .navbar ul {
+      display: flex;
+      gap: 30px;
+    }
+
+    .navbar ul li {
+      list-style: none;
+    }
+
+    .navbar ul li a {
+      font-size: 18px;
+      font-weight: 500;
+      transition: .3s;
+    }
+
+    .navbar ul li a:hover,
+    .navbar ul li.active a {
+      color: #7cf03d;
+    }
+
+    /* ===== Hero Section ===== */
+    .home {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+      min-height: 100vh;
+      padding: 120px 9% 40px;
+      visibility: hidden;
+      opacity: 0;
+      animation: show-content 1.5s linear forwards;
+      animation-delay: 1.6s;
+    }
+
+    @keyframes show-content {
+      100% {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    /* ===== Hero Image ===== */
+    .home-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+    }
+
+    .img-box {
+      position: relative;
+      width: 32vw;
+      height: 32vw;
+      border-radius: 50%;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .img-box::before,
+    .img-box::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: conic-gradient(transparent, transparent, transparent, #7cf03d);
+      transform: rotate(0deg);
+      animation: rotate-border 10s linear infinite;
+    }
+
+    .img-box::after {
+      animation-delay: -5s;
+    }
+
+    @keyframes rotate-border {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .img-item {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #1f242d;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .img-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      mix-blend-mode: lighten;
+    }
+
+    /* ===== Info Section ===== */
+    .home-info {
+      flex: 1;
+    }
+
+    .home-info h1 {
+      font-size: 55px;
+    }
+
+    .home-info h2 {
+      display: flex;
+      font-size: 32px;
+      margin-top: 10px;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .home-info p {
+      font-size: 16px;
+      margin: 20px 0 25px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    .home-info h2 span {
+      position: relative;
+      display: inline-block;
+      color: transparent;
+      -webkit-text-stroke: .7px #7cf03d;
+      animation: display-text 16s linear infinite;
+      animation-delay: calc(-4s * var(--i));
+    }
+
+    @keyframes display-text {
+      25%, 100% {
+        display: none;
+      }
+    }
+
+    .home-info h2 span::before {
+      content: attr(data-text);
+      position: absolute;
+      width: 0;
+      border-right: 2px solid #7cf03d;
+      color: #7cf03d;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: fill-text 4s linear infinite;
+    }
+
+    @keyframes fill-text {
+      10%, 100% {
+        width: 0;
+      }
+      70%, 90% {
+        width: 100%;
+      }
+    }
+
+    /* ===== Buttons & Socials ===== */
+    .btn-sci {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 28px;
+      background: #7cf03d;
+      border: 2px solid #7cf03d;
+      border-radius: 40px;
+      box-shadow: 0 0 10px #7cf03d;
+      font-size: 16px;
+      color: #1f242d;
+      font-weight: 600;
+      transition: .3s;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: #7cf03d;
+      box-shadow: none;
+    }
+
+    .sci {
+      display: flex;
+      gap: 12px;
+    }
+
+    .sci a {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border: 2px solid #7cf03d;
+      border-radius: 50%;
+      font-size: 20px;
+      color: #7cf03d;
+      transition: .3s;
+    }
+
+    .sci a:hover {
+      background: #7cf03d;
+      color: #1f242d;
+      box-shadow: 0 0 10px #7cf03d;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .home {
+        flex-direction: column-reverse; /* Image on top */
+        text-align: center;
+        padding: 80px 20px 20px; /* ~1cm gap top and sides */
+        gap: 20px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+      }
+
+      .navbar ul {
+        margin-top: 10px;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .home-info h1 {
+        font-size: 32px;
+      }
+
+      .home-info h2 {
+        font-size: 20px;
+        justify-content: center;
+      }
+
+      .home-info p {
+        font-size: 14px;
+      }
+
+      .btn {
+        padding: 8px 20px;
+        font-size: 14px;
+      }
+
+      .img-box {
+        width: calc(100% - 40px); /* full width - 20px left & right */
+        height: auto;
+        max-width: 400px; /* keeps it nice */
+      }
+
+      .img-item {
+        aspect-ratio: 1/1; /* keep circle */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .home-info h1 {
+        font-size: 28px;
+      }
+      .home-info h2 {
+        font-size: 18px;
+      }
+      .home-info p {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Opening Bars Animation -->
+  <div class="bars-animation">
+    <div class="bar" style="--i:4;"></div>
+    <div class="bar" style="--i:3;"></div>
+    <div class="bar" style="--i:2;"></div>
+    <div class="bar" style="--i:1;"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="#" class="logo">Portfolio.</a>
+    <ul>
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Service</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="home">
+    <!-- Info -->
+    <div class="home-info">
+      <h1>Chandan Raut</h1>
+      <h2>I'm a
+        <span style="--i:4;" data-text="Frontend Developer">Frontend Developer</span>
+        <span style="--i:3;" data-text="Software Developer">Software Developer</span>
+        <span style="--i:2;" data-text="AI Specialist">AI Specialist</span>
+        <span style="--i:1;" data-text="Web Designer">Web Designer</span>
+      </h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum expedita quos ut voluptates cupiditate libero veritatis voluptas esse provident ducimus.</p>
+      <div class="btn-sci">
+        <a href="CV.jpg" download class="btn">Download CV</a>
+        <div class="sci">
+          <a href="#"><i class='bx bxl-github'></i></a>
+          <a href="https://www.linkedin.com/in/chandan-raut-3250792ba"><i class='bx bxl-linkedin-square'></i></a>
+          <a href="https://www.instagram.com/chandanraut474/"><i class='bx bxl-instagram'></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="home-img">
+      <div class="img-box">
+        <div class="img-item">
+          <img src="https://i.postimg.cc/kMH5zm1n/Whats-App-Image-2023-12-17-at-3-08-45-PM-Photoroom.png" alt="Profile">
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
